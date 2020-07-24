@@ -11,15 +11,13 @@
     <Page.Resources>
         <Style TargetType="ListView" x:Key="CollectionsStyle">
             <Setter Property="SelectionMode" Value="None" />
+            <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled" />
         </Style>
         
-        <Style TargetType="ListViewItem" x:Key="CollectionsContainerStyle"></Style>
-        
         <Style TargetType="ListView" x:Key="ItemsStyle">
-            <!-- Enable ScrollViewer.HorizontalScrollMode to make ListViews scrollable -->
+            <!-- ScrollViewer.HorizontalScrollMode must be disabled so we can manage it manually. -->
             <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled" />
-            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Visible" />
-            <Setter Property="ScrollViewer.IsHorizontalRailEnabled" Value="True" />
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
             <Setter Property="ScrollViewer.VerticalScrollMode" Value="Disabled" />
             <Setter Property="SelectionMode" Value="Single" />
             <Setter Property="ItemsPanel">
@@ -55,7 +53,8 @@
                     ItemsSource="{Binding Items}"
                     ItemTemplate="{StaticResource ItemTemplate}"
                     Style="{StaticResource ItemsStyle}"
-                    ItemContainerStyle="{StaticResource ItemsContainerStyle}" />
+                    ItemContainerStyle="{StaticResource ItemsContainerStyle}"
+                    PointerWheelChanged="ItemListView_PointerWheelChanged" />
             </Grid>
         </DataTemplate>
 
@@ -70,12 +69,12 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
+
         <ListView
-            ItemContainerStyle="{StaticResource CollectionsContainerStyle}"
+            Name="CollectionsListView"
             ItemsSource="{Binding Collections}"
             ItemTemplate="{StaticResource CollectionTemplate}"
-            Style="{StaticResource CollectionsStyle}">
-        </ListView>
+            Style="{StaticResource CollectionsStyle}" />
 
         <!--<ListView
             ItemsSource="{Binding Items}"
